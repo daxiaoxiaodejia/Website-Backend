@@ -1,7 +1,7 @@
 <template>
   <div class="login_container">
     <div class="box">
-      <img src alt>
+      <img src="../assets/image/logo.jpg">
       <el-form :rules="rules" ref="form" :model="form">
         <el-form-item prop="username">
           <el-input
@@ -76,6 +76,12 @@ export default {
   border-radius: 4px;
   background: linear-gradient(45deg, #d2ecf1, #efefef);
   padding: 0 15px;
+  box-sizing: border-box;
+}
+.login_container .box img {
+  width: 200px;
+  display: block;
+  margin: 15px auto
 }
 </style>
 
