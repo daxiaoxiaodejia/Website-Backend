@@ -32,7 +32,7 @@ const router = new Router({
   ]
 })
 
-// 天机导航守卫
+// 添加导航守卫
 router.beforeEach((to, from, next) => {
   // to 去的路由对象,
   // from 离开的路由对象,

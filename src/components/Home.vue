@@ -8,7 +8,7 @@
   <el-container>
     <el-aside class="home_aside" :width="collapse?'65px':'180px'">
        <el-menu
-       router = "false"
+      router="false"
       :collapse="collapse"
       :collapse-transition ="false"
       :unique-opened="true"
@@ -32,7 +32,7 @@
       </el-menu>    
     </el-aside>
     <el-main class="home_main">
-      <router-view/>
+      <router-view></router-view>
     </el-main>
   </el-container>
 </el-container>

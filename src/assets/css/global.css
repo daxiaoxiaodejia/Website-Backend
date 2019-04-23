@@ -5,3 +5,13 @@ html,body,#app{
     margin: 0;
     padding: 0
 }
+.el-card{
+    margin-top: 15px;
+}
+.el-table{
+    margin-top: 15px;
+}
+.pager_container{
+    margin-top: 15px;
+    text-align: right;
+}
