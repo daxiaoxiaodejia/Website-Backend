@@ -8,7 +8,8 @@
   <el-container>
     <el-aside class="home_aside" :width="collapse?'65px':'180px'">
        <el-menu
-      router="false"
+      :default-active="$route.name"
+      router
       :collapse="collapse"
       :collapse-transition ="false"
       :unique-opened="true"

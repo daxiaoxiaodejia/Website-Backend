@@ -14,8 +14,8 @@ export default {
         pagenum: 1,
         pagesize: 2
       },
-      total: "total",
-      dialogFormVisible : false,
+      total: 0,
+      dialogFormVisible: false,
       addForm: {
         username: '',
         password: '',
@@ -80,7 +80,7 @@ export default {
             email: this.editForm.email,
             mobile: this.editForm.mobile
           })
-          if (meta.status !== 200) return this.addSubmit.$message.error('修改失败')
+          if (meta.status !== 200) return this.editSubmit.$message.error('修改失败')
           this.$message.success('修改成功')
           this.getData()
           this.editDialogFormVisible = false
@@ -117,53 +117,51 @@ export default {
       })
     },
     showDialogForm () {
-            this.dialogFormVisible = true
-            // console.log(this.$refs)
-            // setTimeout(() => {
-            //     this.$refs.addForm.resetFields()
-            // }, 0)
-            // 下一帧要做的事情
-        this.$nextTick(() => {
-            this.$refs.addForm.resetFields()
-        })     
-        },
-        delUsers(id) {
-            this.$confirm('是否删除该数据', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-            }).then(async () => {
-                const { data: { meta } } = await this.$http.delete(`users/${id}`)
-                if (meta.status !== 200) return this.$message.error('删除失败')
-                this.$message.success('删除成功')
-                this.getData()
-            }).catch(() => { })
-        },
-        async updateState(id, newState) {
-            const { data: { meta } } = await this.$http.put(`users/${id}/state/${newState}`)
-            if (meta.status !== 200) return this.$message.error('修改状态失败')
-            this.$message.success('修改状态成功')
-            this.getData()
-        },
-        async showRoleDialogFormVisible(row) {
-            this.roleDialogFormVisible = true
-            const { data: { data, meta } } = await this.$http.get('roles')
-            if (meta.status !== 200) return this.$message.error('获取角色失败')
-            this.options = data
-            console.log(data)
-            this.roleUserId = row.id
-            this.roleUserName = row.username
-            this.roleUserRoleName = row.role_name
-        },
-        async changeRole() {
-            const { data: { meta } } = await this.$http.put(`users/${this.roleUserId}/role`, { rid: this.roleValue })
-            if (meta.status !== 200) return this.$message.error('更改角色失败')
-            this.$message.success('分配角色成功')
-            this.roleDialogFormVisible = false
+      this.dialogFormVisible = true
+      // console.log(this.$refs)
+      // setTimeout(() => {
+      //     this.$refs.addForm.resetFields()
+      // }, 0)
+      // 下一帧要做的事情
+      this.$nextTick(() => {
+        this.$refs.addForm.resetFields()
+      })     
+    },
+    delUsers (id) {
+      this.$confirm('是否删除该数据', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(async () => {
+        const { data: { meta } } = await this.$http.delete(`users/${id}`)
+        if (meta.status !== 200) return this.$message.error('删除失败')
+        this.$message.success('删除成功')
+        this.getData()
+      }).catch(() => { })
+    },
+    async updateState (id, newState) {
+      const { data: { meta } } = await this.$http.put(`users/${id}/state/${newState}`)
+      if (meta.status !== 200) return this.$message.error('修改状态失败')
+      this.$message.success('修改状态成功')
       this.getData()
     },
-    // 编辑功能
-
-
+    async showRoleDialogFormVisible (row) {
+      this.roleDialogFormVisible = true
+      const { data: { data, meta } } = await this.$http.get('roles')
+      if (meta.status !== 200) return this.$message.error('获取角色失败')
+      this.options = data
+      console.log(data)
+      this.roleUserId = row.id
+      this.roleUserName = row.username
+      this.roleUserRoleName = row.role_name
+    },
+    async changeRole () {
+      const { data: { meta } } = await this.$http.put(`users/${this.roleUserId}/role`, { rid: this.roleValue })
+      if (meta.status !== 200) return this.$message.error('更改角色失败')
+      this.$message.success('分配角色成功')
+      this.roleDialogFormVisible = false
+      this.getData()
     }
+    // 编辑功能
+  }
 }
