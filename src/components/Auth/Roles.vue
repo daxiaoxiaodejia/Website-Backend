@@ -47,7 +47,7 @@
                     <el-button-group>
                         <el-button icon="el-icon-edit" @click="showEditDialog(scope.row)" round></el-button>
                         <el-button icon="el-icon-delete" @click="delRoles(scope.row.id)" round></el-button>
-                        <el-button icon="el-icon-setting" @click="showRightDialog()" round></el-button>
+                        <el-button icon="el-icon-setting" @click="showRightDialog(scope.row)" round></el-button>
                     </el-button-group>
                 </template>
 
@@ -90,10 +90,12 @@
     <!-- 分配权限对话框 -->
     <el-dialog title="分配权限" :visible.sync="rightDialogFormVisible">
         <el-tree
+            ref = "tree"
             :data="rightTree"
             show-checkbox
             node-key="id"
             :default-expand-all="true"
+            :default-checked-keys="rightCheckedList"
             :props="defaultProps">
         </el-tree>
         <div slot="footer" class="dialog-footer">

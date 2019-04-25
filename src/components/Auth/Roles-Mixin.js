@@ -27,47 +27,15 @@ export default {
         ]
       },
       rightDialogFormVisible: false,
-      rightTree: [{
-        id: 1,
-        label: '一级 1',
-        children: [{
-          id: 4,
-          label: '二级 1-1',
-          children: [{
-            id: 9,
-            label: '三级 1-1-1'
-          }, {
-            id: 10,
-            label: '三级 1-1-2'
-          }]
-        }]
-      }, {
-        id: 2,
-        label: '一级 2',
-        children: [{
-          id: 5,
-          label: '二级 2-1'
-        }, {
-          id: 6,
-          label: '二级 2-2'
-        }]
-      }, {
-        id: 3,
-        label: '一级 3',
-        children: [{
-          id: 7,
-          label: '二级 3-1'
-        }, {
-          id: 8,
-          label: '二级 3-2'
-        }]
-      }],
+      rightTree: [],
+      rightCheckedList: [],
+      rightRoleId: null,
       defaultProps: {
         // 数据结构中 下一级数据的字段名称
         children: 'children',
         // 显示的文字  的数据字段的名称
-        label: 'label'
-      }
+        label: 'authName'
+      }      
     }
   },
   mounted () {
@@ -170,11 +138,40 @@ export default {
       }).catch(() => {})
     },
     // 权限分配对话框
-    showRightDialog () {
+    async showRightDialog (row) {
+      // this.rightCheckedList = []
+      this.rightRoleId = row.id
+      const {data: {data, meta}} = await this.$http.get('rights/tree')
+      if (meta.status !== 200) return this.$message.error('删除失败')
+      this.rightTree = data
+      // row获取当前行已有权限  已有权限row.child
+      const arr = []
+      row.child.forEach(item =>{
+        item.child.forEach(item=>{
+          item.child.forEach(item=>{
+            arr.push(item.id)
+          })
+        })
+      })
+      // console.log(arr)
+      this.rightCheckedList = arr
       this.rightDialogFormVisible = true
     },
     // 权限分配函数
-    rightSubmit () {
+    async rightSubmit () {
+      // 合并全选与半选操作
+      const treeDom = this.$refs.tree
+      const checkedArr = treeDom.getCheckedKeys()
+      const halfCheckArr = treeDom.getHalfCheckedKeys()
+      const arr = [...checkedArr, ...halfCheckArr]
+      // console.log(arr)
+      const {data: {data, meta}} = await this.$http.post(`roles/${this.rightRoleId}/rights`, {
+        rids: arr.join(',')
+      })
+      if (meta.status !== 200) return this.$message.error('分配权限失败')
+      this.$message.success('分配权限成功')
+      this.rightDialogFormVisible = false
+      this.getData()
     }
   }
 }
