@@ -1,13 +1,18 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from '@/components/Login'
-import Home from '@/components/Home/Home'
-import Welcome from '@/components/Welcome'
-import Users from '@/components/users/Users'
-import Rights from '@/components/Auth/Rights'
-import Roles from '@/components/Auth/Roles'
-import Categories from '@/components/goods/Categories'
-import Params from '@/components/goods/Params'
+
+const Login = () => import('@/components/Login')
+const Home = () => import('@/components/Home/Home')
+const Welcome = () => import('@/components/Welcome')
+const Users = () => import('@/components/users/Users')
+const Rights = () => import('@/components/Auth/Rights')
+const Roles = () => import('@/components/Auth/Roles')
+const Categories = () => import('@/components/goods/Categories')
+const Params = () => import('@/components/goods/Params')
+const Goods = () => import('@/components/goods/Goods')
+const GoodsAdd = () => import('@/components/goods/Goods-Add')
+const Orders = () => import('@/components/orders/Orders')
+const Reports = () => import('@/components/reports/Reports')
 
 Vue.use(Router)
 
@@ -34,7 +39,11 @@ const router = new Router({
         {path: '/rights', name: 'rights', component: Rights},
         {path: '/roles', name: 'roles', component: Roles},
         {path: '/Categories', name: 'categories', component: Categories},
-        {path: '/params', name: 'params', component: Params}
+        {path: '/params', name: 'params', component: Params},
+        {path: '/goods', name: 'goods', component: Goods},
+        {path: '/goods/add', name: 'goodsadd', component: GoodsAdd},
+        {path: '/orders', name: 'orders', component: Orders},
+        {path: '/reports', name: 'reports', component: Reports}
       ]
     }
   ]

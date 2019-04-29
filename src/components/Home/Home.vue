@@ -25,7 +25,7 @@
           <span>&nbsp;{{item.authName}}</span>
         </template>
         <!-- 二级菜单 -->    
-          <el-menu-item :index="lastItem.path" v-for="lastItem in item.children" :key="lastItem.id">
+          <el-menu-item :index="'/'+lastItem.path" v-for="lastItem in item.children" :key="lastItem.id">
             <i class="el-icon-menu"></i>
             <span>{{lastItem.authName}}</span>
           </el-menu-item>   
